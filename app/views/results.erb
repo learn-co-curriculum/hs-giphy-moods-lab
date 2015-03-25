@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Giphy Moods</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>The Giphy Mood Translator</h1>
+      <h3>Here are some giphs to help you express how <%= @mood %> you are feeling:</h3>
+      <% @photos.each do |photo| %>
+        <p><img src="<%=photo%>"></p>
+      <% end %>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
