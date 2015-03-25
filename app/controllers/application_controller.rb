@@ -15,4 +15,11 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  post '/results' do
+    gipher = Giph.new
+    @photos = gipher.search(params[:mood])
+    @mood = params[:mood]
+    erb :results
+  end
+
 end
