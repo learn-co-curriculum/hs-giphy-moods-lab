@@ -79,7 +79,7 @@ Enjoy the fruits of your labor!
 
 ## Bonus Challenges
 + Add delete buttons to your list of saved gifs.
-  * Hint 1: There is an ActiveRecord method to delete something from a table and you know what it is!
+  * Hint 1: There is an ActiveRecord method that you can use to delete something from a table. It targets a specific record by the id number and it works a little like `.find` that way.
   * Hint 2: One strategy you can try is creating a little form around each individual photo with a "Delete" button (similar to a submit button but with different text inside of it).
 + Set up your app with user accounts.
 + Allow users to save a personal list of their favorite mood/gif matches.
