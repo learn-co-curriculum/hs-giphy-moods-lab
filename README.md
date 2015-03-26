@@ -7,7 +7,9 @@ type: challenges
 
 ## Giphy Mood Translator
 
-You're going to build your very own MVC application to translate moods into gifs. Let's do this!
+You're going to build your very own MVC application to translate moods into gifs. It's going to look a little something like this: http://herokuapp.giphy-mood-translator.com
+
+Let's do this!
 
 ###Part 1 - Using the Giphy API
 
