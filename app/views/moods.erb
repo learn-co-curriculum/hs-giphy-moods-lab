@@ -8,17 +8,17 @@
   <body>
     <div class="container">
       <h1><a href="/">The Giphy Mood Translator</a></h1>
-      <h3>Here are some giphs to help you express how <%= @mood %> you are feeling:</h3>
-      <form action="/save" method="post">
-        <input type="hidden" name="mood" value="<%= @mood %>">
-        <% @photo_urls[0..10].each do |url| %>
-          <p>
-            <input type="radio" name="url" value="<%=url%>">
-            <img src="<%=url%>">
-          </p>
+      <h3>Here are some saved gifs that you can use:</h3>
+        <% @moods.each do |mood| %>
+          <div class="mood">
+            <form action="/destroy" method="post">
+              <h4><%= mood.mood %></h4>
+              <input type="hidden" name="mood_id" value="<%= mood.id %>">
+              <p><img src="<%=mood.image_url%>"></p>
+              <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+          </div>
         <% end %>
-        <input type="submit" class="btn btn-primary btn-lg">
-      </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

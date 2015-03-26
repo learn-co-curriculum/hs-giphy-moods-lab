@@ -5,51 +5,79 @@ level: 3
 type: challenges
 ---
 
-## Flatiron Swag Shop For REAL
+## Giphy Mood Translator
 
-People love our Flatiron swag so much they are [singing about it](https://docs.google.com/a/flatironschool.com/file/d/0B_qWLnYbXOdPS2tMbHVpOG1GUVE/edit). We desperately need your help building an app to sell our sweet Flatiron merch. Follow the steps below to get started.
+You're going to build your very own MVC application to translate moods into gifs. Let's do this!
 
-**Step 1** - Time for the MVC! First things first - the M. We'll start off with one model/table for Items with the following attributes/columns:
+###Part 1 - Using the Giphy API
 
+**Step 1** - What's the first letter in MVC stand for? The models! Check out `giph.rb` in the models directory. We've set up a Giph class and some methods to help you connect to the Giphy API. Let's take a look at the `search` method.
+
+Try testing it out by adding
 ```ruby
-:name
-:image_url
-:price
-:count
+gipher = Giph.new
+@photos = gipher.search("happy")
 ```
 
-Set up your Item class in `item.rb` (don't forget to inherit from from ActiveRecord::Base) and create a migration for the items table `rake db:create_migration NAME="create_items"`. Fill in your `up` and `down` methods in the migration file then run it with `rake db:migrate`.
+to your the `'\'` route in your application controller. Now we've got some `@photos` that we can display in `index.erb`. That file is in which directory? Did you say views?
 
-**Step 2** - Let's add some items to our database! Boot up `tux` in your terminal and create some new items. Here are some images links that you can use:
+**Step 2** - On to the V in MVC. We've got `@photos` - an array of image urls - and we want to display each of these images in `index.erb` (for now). You know how to do that! Now go do it.
 
-+ [hat](https://s3.amazonaws.com/after-school-assets/flatiron-swag-store-lab/flatiron_hat.jpg)
-+ [hoodie](https://s3.amazonaws.com/after-school-assets/flatiron-swag-store-lab/flatiron_hoodie.jpg)
-+ [men's tee](https://s3.amazonaws.com/after-school-assets/flatiron-swag-store-lab/flatiron_tee_m.jpg)
-+ [women's tee](https://s3.amazonaws.com/after-school-assets/flatiron-swag-store-lab/flatiron_tee_w.jpg)
-+ [tote](https://s3.amazonaws.com/after-school-assets/flatiron-swag-store-lab/flatiron_tote.jpg)
+**Step 3** - Did you see some photos on your home page? Excellent. Not everyone is happy all the time though, right? We want our visitors to be able to share their mood with us and then perform a Giph search with that info. How do we get input from a user? Did you say forms? Because that is the correct answer. Go to `index.erb` and create a form that takes in a users mood and posts that mood to a `'/results'` route in your application controller.
 
-You can set your own price and count (how much of the item is in stock) but remember these items are in HIGH demand!
+**Step 4** - We've covered the M and the V in MVC so what's left? Yep, onto the C - the application controller. First we need to create that `post '/results'` route for our form. Then let's take this code from our `'/'` route
+```ruby
+gipher = Giph.new
+@photos = gipher.search("happy")
+```
+and move it into the `post '/results'` route. We don't want to always search for "happy" though right. How do we take the mood from our form and replace "happy" with that input? Make it happen.
 
-**Step 3** - We've got the M covered, now let's move onto the V. In your views directory create an `items.erb` file that will display all of the merch for our store - including each item's name, photo and price.
+**Step 5** - We're going to need a new template to display all of our fabulous gifs. Set up a new `results.erb` template file in your views. Transfer that code you wrote to display your gifs over to that file.
 
-**Step 4** - Set up your `get '/items'` route to pull all of your items from the database and display them in your new `items.erb` template.
+**Step 6** - Fire up shotgun and test it out!
 
-Take a look at that swag!
+Great job! You're probably getting some pretty incredible gifs. You might want to save your favorites, huh? Time to build a new feature - the ability to save your favorite gif from the list!
 
-## Challenges
-+ Set up a form that lists all the items and allows visitors to chose how many of each item they would like to order. Hint: There is a `type="number"` attribute for form inputs. Google it!
-  * When the form is submitted the order total is tallied up and the user is displayed a page with all the items being ordered and the total cost.
-  * Don't forget that the items' inventory (count) should also decrease when the form is submitted!
+###Part 2 - Saving your favorite gif
+Whenever you add a new feature you need to think about each portion of the MVC. So...
 
-+ Add an inventory page that displays the count for each item.
-  * Set up a form on your inventory page that lets you increase the inventory for any item. When the form is submitted, the items' inventory (count) should increase.
+**Step 1** First things first - the M. We'll start off with one model/table for Moods with the following attributes/columns:
 
-+ Set up a User model (with attributes for name and email) and a sign up page.
+```ruby
+:mood
+:image_url
+```
 
-+ Set up a Purchase model that will track user's purchases.
-  * This table will have two columns - user_id and item_id. Tables like this are called join tables because they connect (or join) objects from other models/tables.
-  * You'll also need to set up new ActiveRecord relationships for each model. The Purchase model `belongs_to` users and items. The User and Item models both `has_many` purchases. This may seem a little strange but just roll with it.
-  * If you set up your `has_many` and `belongs_to` relationships properly you'll be able to get a list of everything a user has purchased from the store with something like `@user.purchases`.
+Set up your Mood class in a `mood.rb` file in the models directory (don't forget to inherit from from ActiveRecord::Base) and create a migration for the moods table `rake db:create_migration NAME="create_moods"`. Add your `up` and `down` methods in the migration file then run it with `rake db:migrate`.
 
-+ Welcome to the wonderful world of eCommerce!
+**Step 2** - The M is covered, now let's move onto the V. We're already displaying all of our gifs in `results.erb` but now we need to get some input from our user on which one they want to save. How do we get input from users? Did you say a form?! Good answer.
+
+Let's wrap all of our photos in a form and add a radio button next to each photo so that users can click on the photo they like best and then hit save. We'll also need a hidden input to submit our mood. It's going to look a little something like this:
+
+```erb
+<form action="/save" method="post">
+  <input type="hidden" value="<%= @mood %>">
+  <% @photo_urls.each do |url| %>
+    <p>
+      <input type="radio" name="image-url" value="<%=url%>">
+      <img src="<%=url%>">
+    </p>
+  <% end %>
+  <input type="submit" class="btn btn-primary btn-lg">
+</form>
+```
+
+But what good is a form if the input is on a road to nowhere? We've come to the third component in our MVC.
+
+**Step 3** - The C. You'll need to set up a `'/save'` route in your application controller that takes the params from your form and uses them to create a new entry in your `moods`. I know that you can do this! Don't forget to render an erb template or redirect your user after you've saved the gif.
+
+Enjoy the fruits of your labor!
+
+## Bonus Challenges
++ Add delete buttons to your list of saved gifs.
+  * Hint 1: There is an ActiveRecord method to delete something from a table and you know what it is!
+  * Hint 2: One strategy you can try is creating a little form around each individual photo with a "Delete" button (similar to a submit button but with different text inside of it).
++ Set up your app with user accounts.
++ Allow users to save a personal list of their favorite mood/gif matches.
+  * Hint: The easiest way to do this is to set up a has_many/belongs_to relationship between users and moods. A user has_many moods and a mood belongs_to a user.
 
