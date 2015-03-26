@@ -1,7 +1,6 @@
 require './config/environment'
 require './app/models/giph.rb'
 require './app/models/mood.rb'
-require 'pry'
 
 class ApplicationController < Sinatra::Base
 
