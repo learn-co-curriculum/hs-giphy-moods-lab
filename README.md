@@ -80,3 +80,5 @@ Enjoy the fruits of your labor!
 + Allow users to save a personal list of their favorite mood/gif matches.
   * Hint: The easiest way to do this is to set up a has_many/belongs_to relationship between users and moods. A user has_many moods and a mood belongs_to a user.
 
+
+<a href='https://learn.co/lessons/hs-giphy-moods-lab' data-visibility='hidden'>View this lesson on Learn.co</a>
