@@ -81,4 +81,4 @@ Enjoy the fruits of your labor!
   * Hint: The easiest way to do this is to set up a has_many/belongs_to relationship between users and moods. A user has_many moods and a mood belongs_to a user.
 
 
-<a href='https://learn.co/lessons/hs-giphy-moods-lab' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/hs-giphy-moods-lab' title='Giphy Mood Translator'>Giphy Mood Translator</a> on Learn.co and start learning to code for free.</p>
